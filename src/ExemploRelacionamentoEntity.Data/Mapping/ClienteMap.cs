@@ -8,7 +8,13 @@ namespace ExemploRelacionamentoEntity.Data.Mapping
     {
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
-            builder.HasKey(prop => prop.Id);
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Nome)
+                .IsRequired();
+
+            builder.Property(x => x.Sobrenome)
+                .IsRequired();
         }
     }
 }
