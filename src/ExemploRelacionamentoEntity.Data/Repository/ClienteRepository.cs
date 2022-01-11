@@ -15,14 +15,14 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             _context = context;
         }
 
-        public async Task<Cliente> Add(Cliente cliente)
+        public async Task<Cliente> AddAsync(Cliente cliente)
         {
             await _context.Clientes.AddAsync(cliente);
             await _context.SaveChangesAsync();
             return cliente;
         }
 
-        public async Task<IEnumerable<Cliente>> GetAll()
+        public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
             return await _context.Clientes
                 .Include(x => x.Endereco)
@@ -30,7 +30,7 @@ namespace ExemploRelacionamentoEntity.Data.Repository
                 .AsNoTracking().ToListAsync();
         }
 
-        public async Task<Cliente> GetById(int id)
+        public async Task<Cliente> GetByIdAsync(int id)
         {
             return await _context.Clientes
                 .Include(x => x.Endereco)
@@ -38,7 +38,7 @@ namespace ExemploRelacionamentoEntity.Data.Repository
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Cliente> Remove(int id)
+        public async Task<Cliente> RemoveAsync(int id)
         {
             var clienteConsultado = await _context.Clientes.FindAsync(id);
             if(clienteConsultado == null)
@@ -51,7 +51,7 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             return clienteRemovido.Entity;
         }
 
-        public async Task<Cliente> Update(Cliente cliente)
+        public async Task<Cliente> UpdateAsync(Cliente cliente)
         {
             var clienteConsultado = await _context.Clientes
                 .Include(x => x.Endereco)

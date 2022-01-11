@@ -6,7 +6,7 @@ namespace ExemploRelacionamentoEntity.Data
 {
     public static class Bootstrapper
     {
-        public static IServiceCollection AddRepository(this IServiceCollection services)
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services
                 .AddScoped<IClienteRepository, ClienteRepository>();

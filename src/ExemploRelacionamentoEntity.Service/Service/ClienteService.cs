@@ -13,29 +13,29 @@ namespace ExemploRelacionamentoEntity.Service.Service
             _clienteService = clienteService;
         }
 
-        public async Task<Cliente> Add(Cliente cliente)
+        public async Task<Cliente> AddAsync(Cliente cliente)
         {
-            return await _clienteService.Add(cliente);
+            return await _clienteService.AddAsync(cliente);
         }
 
-        public async Task<IEnumerable<Cliente>> GetAll()
+        public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            return await _clienteService.GetAll();
+            return await _clienteService.GetAllAsync();
         }
 
-        public async Task<Cliente> GetById(int id)
+        public async Task<Cliente> GetByIdAsync(int id)
         {
-            return await _clienteService.GetById(id);
+            return await _clienteService.GetByIdAsync(id);
         }
 
-        public async Task<Cliente> Remove(int id)
+        public async Task<Cliente> RemoveAsync(int id)
         {
-            return await _clienteService.Remove(id);
+            return await _clienteService.RemoveAsync(id);
         }
 
-        public async Task<Cliente> Update(Cliente cliente)
+        public async Task<Cliente> UpdateAsync(Cliente cliente)
         {
-            return await _clienteService.Update(cliente);
+            return await _clienteService.UpdateAsync(cliente);
         }
     }
 }

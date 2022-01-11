@@ -6,10 +6,10 @@ namespace ExemploRelacionamentoEntity.Domain.Interface
 {
     public interface IClienteRepository
     {
-        Task<IEnumerable<Cliente>> GetAll();
-        Task<Cliente> GetById(int id);
-        Task<Cliente> Add(Cliente cliente);
-        Task<Cliente> Update(Cliente cliente);
-        Task<Cliente> Remove(int id);
+        Task<IEnumerable<Cliente>> GetAllAsync();
+        Task<Cliente> GetByIdAsync(int id);
+        Task<Cliente> AddAsync(Cliente cliente);
+        Task<Cliente> UpdateAsync(Cliente cliente);
+        Task<Cliente> RemoveAsync(int id);
     }
 }
