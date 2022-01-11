@@ -20,6 +20,8 @@ namespace ExemploRelacionamentoEntity.Data.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Cliente>(new ClienteMap().Configure);
+            modelBuilder.Entity<Endereco>(new EnderecoMap().Configure);
+            modelBuilder.Entity<Telefone>(new TelefoneMap().Configure);
         }
     }
 }
