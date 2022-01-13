@@ -9,7 +9,8 @@ namespace ExemploRelacionamentoEntity.Data
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services
-                .AddScoped<IClienteRepository, ClienteRepository>();
+                .AddScoped<IClienteRepository, ClienteRepository>()
+                .AddScoped<IMedicoRepository, MedicoRepository>();
 
             return services;
         }
