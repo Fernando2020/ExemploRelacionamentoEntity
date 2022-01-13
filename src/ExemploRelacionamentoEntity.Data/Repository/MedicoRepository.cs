@@ -15,8 +15,26 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             _context = context;
         }
 
+        private async Task AddEspecialidades(Medico medico)
+        {
+            var especialidades = new List<Especialidade>();
+            foreach (var especialidade in medico.Especialidades)
+            {
+                var especialidadeConsultada = await _context.Especialidades
+                    .FirstOrDefaultAsync(x => x.Id == especialidade.Id);
+
+                if (especialidadeConsultada != null)
+                {
+                    especialidades.Add(especialidadeConsultada);
+                }
+            }
+
+            medico.Especialidades = especialidades;
+        }
+
         public async Task<Medico> AddAsync(Medico medico)
         {
+            await AddEspecialidades(medico);
             await _context.Medicos.AddAsync(medico);
             await _context.SaveChangesAsync();
             return medico;
@@ -24,21 +42,18 @@ namespace ExemploRelacionamentoEntity.Data.Repository
 
         public async Task<IEnumerable<Medico>> GetAllAsync()
         {
-            var medicos = await _context.Medicos
+            return await _context.Medicos
                 .Include(x => x.Especialidades)
                 .AsNoTracking()
                 .ToListAsync();
-
-            return medicos;
         }
 
         public async Task<Medico> GetByIdAsync(int id)
         {
-            var medico = await _context.Medicos
+            return await _context.Medicos
                 .Include(x => x.Especialidades)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
-
-            return medico;
         }
 
         public async Task<Medico> RemoveAsync(int id)
@@ -59,6 +74,7 @@ namespace ExemploRelacionamentoEntity.Data.Repository
         public async Task<Medico> UpdateAsync(Medico medico)
         {
             var medicoConsultado = await _context.Medicos
+                .Include(x => x.Especialidades)
                 .FirstOrDefaultAsync(x => x.Id == medico.Id);
 
             if(medicoConsultado == null)
@@ -67,17 +83,23 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             }
 
             _context.Entry(medicoConsultado).CurrentValues.SetValues(medico);
-            AddEspecialidades(medicoConsultado, medico);
+            await UpdateEspecialidades(medicoConsultado, medico);
             await _context.SaveChangesAsync();
             return medicoConsultado;
         }
 
-        private void AddEspecialidades(Medico medicoConsultado, Medico medico)
+        private async Task UpdateEspecialidades(Medico medicoConsultado, Medico medico)
         {
             medicoConsultado.Especialidades.Clear();
             foreach (var especialidade in medico.Especialidades)
             {
-                medicoConsultado.Especialidades.Add(especialidade);
+                var especialidadeConsultada = await _context.Especialidades
+                    .FirstOrDefaultAsync(x => x.Id == especialidade.Id);
+
+                if(especialidadeConsultada != null)
+                {
+                    medicoConsultado.Especialidades.Add(especialidadeConsultada);
+                }
             }
         }
     }

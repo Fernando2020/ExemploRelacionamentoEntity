@@ -27,7 +27,8 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             return await _context.Clientes
                 .Include(x => x.Endereco)
                 .Include(x => x.Telefones)
-                .AsNoTracking().ToListAsync();
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Cliente> GetByIdAsync(int id)
@@ -35,13 +36,16 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             return await _context.Clientes
                 .Include(x => x.Endereco)
                 .Include(x => x.Telefones)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Cliente> RemoveAsync(int id)
         {
-            var clienteConsultado = await _context.Clientes.FindAsync(id);
-            if(clienteConsultado == null)
+            var clienteConsultado = await _context.Clientes
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (clienteConsultado == null)
             {
                 return null;
             }
@@ -58,20 +62,20 @@ namespace ExemploRelacionamentoEntity.Data.Repository
                 .Include(x => x.Telefones)
                 .FirstOrDefaultAsync(x => x.Id == cliente.Id);
 
-            if(clienteConsultado == null)
+            if (clienteConsultado == null)
             {
                 return null;
             }
 
             _context.Entry(clienteConsultado).CurrentValues.SetValues(cliente);
             clienteConsultado.Endereco = cliente.Endereco;
-            AddTelefones(clienteConsultado, cliente);
+            UpdateTelefones(clienteConsultado, cliente);
 
             await _context.SaveChangesAsync();
             return cliente;
         }
 
-        private void AddTelefones(Cliente clienteConsultado, Cliente cliente)
+        private void UpdateTelefones(Cliente clienteConsultado, Cliente cliente)
         {
             clienteConsultado.Telefones.Clear();
             foreach (var telefone in cliente.Telefones)
