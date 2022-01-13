@@ -1,4 +1,4 @@
-﻿using ExemploRelacionamentoEntity.Domain.Domain;
+﻿using ExemploRelacionamentoEntity.Service.DTO;
 using ExemploRelacionamentoEntity.Service.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace ExemploRelacionamentoEntity.WebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(Medico), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MedicoDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
@@ -32,13 +32,13 @@ namespace ExemploRelacionamentoEntity.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Medico), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MedicoDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
             var medico = await _medicoService.GetByIdAsync(id);
-            if (medico.Id == 0)
+            if (medico == null)
             {
                 return NotFound();
             }
@@ -46,20 +46,20 @@ namespace ExemploRelacionamentoEntity.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Medico), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(MedicoDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post(Medico medico)
+        public async Task<IActionResult> Post(MedicoDTO medico)
         {
             var medicoInserido = await _medicoService.AddAsync(medico);
             return CreatedAtAction(nameof(GetById), new { id = medicoInserido.Id }, medicoInserido);
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(Medico), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MedicoDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Put(Medico medico)
+        public async Task<IActionResult> Put(MedicoDTO medico)
         {
             var medicoAtualizado = await _medicoService.UpdateAsync(medico);
             if (medicoAtualizado == null)

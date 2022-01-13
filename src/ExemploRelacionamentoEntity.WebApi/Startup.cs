@@ -28,6 +28,7 @@ namespace ExemploRelacionamentoEntity.WebApi
 
             services.AddServices();
             services.AddRepositories();
+            services.AddMapping();
 
             services.AddDbContext<ExemploContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("Connection")));

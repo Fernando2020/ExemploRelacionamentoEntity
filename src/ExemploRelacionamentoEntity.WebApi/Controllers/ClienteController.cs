@@ -1,4 +1,4 @@
-﻿using ExemploRelacionamentoEntity.Domain.Domain;
+﻿using ExemploRelacionamentoEntity.Service.DTO;
 using ExemploRelacionamentoEntity.Service.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace ExemploRelacionamentoEntity.WebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(Cliente), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll()
@@ -32,13 +32,13 @@ namespace ExemploRelacionamentoEntity.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Cliente), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
             var cliente = await _clienteService.GetByIdAsync(id);
-            if (cliente.Id == 0)
+            if (cliente == null)
             {
                 return NotFound();
             }
@@ -46,20 +46,20 @@ namespace ExemploRelacionamentoEntity.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(Cliente), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Post(Cliente cliente)
+        public async Task<IActionResult> Post(ClienteDTO cliente)
         {
             var clienteInserido = await _clienteService.AddAsync(cliente);
             return CreatedAtAction(nameof(GetById), new { id = clienteInserido.Id }, clienteInserido);
         }
 
         [HttpPut]
-        [ProducesResponseType(typeof(Cliente), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ClienteDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Put(Cliente cliente)
+        public async Task<IActionResult> Put(ClienteDTO cliente)
         {
             var clienteAtualizado = await _clienteService.UpdateAsync(cliente);
             if (clienteAtualizado == null)

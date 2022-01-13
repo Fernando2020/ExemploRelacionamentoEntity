@@ -1,6 +1,8 @@
 ﻿using ExemploRelacionamentoEntity.Service.Interface;
+using ExemploRelacionamentoEntity.Service.Mapping;
 using ExemploRelacionamentoEntity.Service.Service;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
 
 namespace ExemploRelacionamentoEntity.Service
 {
@@ -14,5 +16,15 @@ namespace ExemploRelacionamentoEntity.Service
 
             return services;
         }
+
+        public static IServiceCollection AddMapping(this IServiceCollection services)
+        {
+            services.AddAutoMapper(
+                    typeof(AutoMapperConfiguration)
+                );
+
+            return services;
+        }
+
     }
 }

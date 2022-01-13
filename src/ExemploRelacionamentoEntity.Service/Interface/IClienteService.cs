@@ -1,4 +1,4 @@
-﻿using ExemploRelacionamentoEntity.Domain.Domain;
+﻿using ExemploRelacionamentoEntity.Service.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,10 +6,10 @@ namespace ExemploRelacionamentoEntity.Service.Interface
 {
     public interface IClienteService
     {
-        Task<IEnumerable<Cliente>> GetAllAsync();
-        Task<Cliente> GetByIdAsync(int id);
-        Task<Cliente> AddAsync(Cliente cliente);
-        Task<Cliente> UpdateAsync(Cliente cliente);
-        Task<Cliente> RemoveAsync(int id);
+        Task<IEnumerable<ClienteDTO>> GetAllAsync();
+        Task<ClienteDTO> GetByIdAsync(int id);
+        Task<ClienteDTO> AddAsync(ClienteDTO clienteDTO);
+        Task<ClienteDTO> UpdateAsync(ClienteDTO clienteDTO);
+        Task<ClienteDTO> RemoveAsync(int id);
     }
 }
