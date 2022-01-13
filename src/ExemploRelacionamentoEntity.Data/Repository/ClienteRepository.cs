@@ -35,7 +35,7 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             return await _context.Clientes
                 .Include(x => x.Endereco)
                 .Include(x => x.Telefones)
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Cliente> RemoveAsync(int id)
@@ -56,7 +56,7 @@ namespace ExemploRelacionamentoEntity.Data.Repository
             var clienteConsultado = await _context.Clientes
                 .Include(x => x.Endereco)
                 .Include(x => x.Telefones)
-                .SingleOrDefaultAsync(x => x.Id == cliente.Id);
+                .FirstOrDefaultAsync(x => x.Id == cliente.Id);
 
             if(clienteConsultado == null)
             {
@@ -65,14 +65,19 @@ namespace ExemploRelacionamentoEntity.Data.Repository
 
             _context.Entry(clienteConsultado).CurrentValues.SetValues(cliente);
             clienteConsultado.Endereco = cliente.Endereco;
+            AddTelefones(clienteConsultado, cliente);
+
+            await _context.SaveChangesAsync();
+            return cliente;
+        }
+
+        private void AddTelefones(Cliente clienteConsultado, Cliente cliente)
+        {
             clienteConsultado.Telefones.Clear();
             foreach (var telefone in cliente.Telefones)
             {
                 clienteConsultado.Telefones.Add(telefone);
             }
-
-            await _context.SaveChangesAsync();
-            return cliente;
         }
     }
 }
