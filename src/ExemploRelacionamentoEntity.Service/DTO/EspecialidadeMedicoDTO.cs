@@ -1,8 +1,7 @@
 ﻿namespace ExemploRelacionamentoEntity.Service.DTO
 {
-    public class EspecialidadeDTO
+    public class EspecialidadeMedicoDTO
     {
         public int Id { get; set; }
-        public string Descricao { get; set; }
     }
 }

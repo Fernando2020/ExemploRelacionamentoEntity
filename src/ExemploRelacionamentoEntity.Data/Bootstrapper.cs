@@ -10,7 +10,8 @@ namespace ExemploRelacionamentoEntity.Data
         {
             services
                 .AddScoped<IClienteRepository, ClienteRepository>()
-                .AddScoped<IMedicoRepository, MedicoRepository>();
+                .AddScoped<IMedicoRepository, MedicoRepository>()
+                .AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
 
             return services;
         }

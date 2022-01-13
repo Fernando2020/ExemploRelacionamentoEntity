@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ExemploRelacionamentoEntity.Domain.Domain;
 using ExemploRelacionamentoEntity.Service.DTO;
-using System.Collections.Generic;
 
 namespace ExemploRelacionamentoEntity.Service.Mapping
 {
@@ -12,6 +11,7 @@ namespace ExemploRelacionamentoEntity.Service.Mapping
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
             CreateMap<Endereco, EnderecoDTO>().ReverseMap();
             CreateMap<Especialidade, EspecialidadeMedicoDTO>().ReverseMap();
+            CreateMap<Especialidade, EspecialidadeDTO>().ReverseMap();
             CreateMap<Medico, MedicoDTO>().ReverseMap();
             CreateMap<Telefone, TelefoneDTO>().ReverseMap();
         }

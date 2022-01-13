@@ -2,7 +2,6 @@
 using ExemploRelacionamentoEntity.Service.Mapping;
 using ExemploRelacionamentoEntity.Service.Service;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
 
 namespace ExemploRelacionamentoEntity.Service
 {
@@ -12,7 +11,8 @@ namespace ExemploRelacionamentoEntity.Service
         {
             services
                 .AddScoped<IClienteService, ClienteService>()
-                .AddScoped<IMedicoService, MedicoService>();
+                .AddScoped<IMedicoService, MedicoService>()
+                .AddScoped<IEspecialidadeService, EspecialidadeService>();
 
             return services;
         }
